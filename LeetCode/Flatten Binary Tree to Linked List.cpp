@@ -34,3 +34,39 @@ public:
         }
     }
 };
+
+
+
+
+// O(1) Space Complexity
+class Solution {
+public:
+    
+    void flatten(TreeNode* root) {
+        if(root==nullptr or (root->left == nullptr and root->right == nullptr)) 
+            return;
+        
+        if(root->left != nullptr){
+        	// untill we reach on a node that does not have any grandchilren
+            flatten(root->left);
+            // store right child
+            TreeNode* temp = root->right;
+            // make left child to right child
+            root->right = root->left;
+            // and assin left child null
+            root->left = nullptr;
+
+            TreeNode* r = root->right;
+            // traverse right end
+            while(r->right != nullptr){
+                r = r->right;
+            }
+            r->right = temp;
+        }
+        
+        if(root->right != nullptr){
+            flatten(root->right);
+        }
+        
+    }
+};
